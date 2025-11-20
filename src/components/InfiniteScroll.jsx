@@ -2,20 +2,24 @@ import { useEffect, useState } from "react";
 
 const InfiniteScroll = () => {
     const [products, setProducts] = useState([]);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(0);
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const MAX_PRODUCTS = 190;
     const fetchData = async () => {
+        console.time("pageFetch");
         if (loading) return;
         setLoading(true);
         //artifical delay to show loading
         await new Promise((resolve) => setTimeout(resolve, 1000));
         try {
-            const data = await fetch(`https://dummyjson.com/products?limit=${limit}`);
+            //improved code with skip
+            const data = await fetch(`https://dummyjson.com/products?limit=10&skip=${limit}`);
+            console.time();
             const result = await data.json();
             console.log(result);
-            setProducts(result.products);
+            //setProducts(result.products);
+            setProducts((prev)=> [...prev, ...result.products]);
 
             if (result.total <= limit) {
                 setHasMore(false);
@@ -26,6 +30,7 @@ const InfiniteScroll = () => {
         }
         finally {
             setLoading(false);
+            console.timeEnd("pageFetch"); 
         }
     }
     useEffect(() => {
@@ -41,6 +46,7 @@ const InfiniteScroll = () => {
             // if (bottom || loading || !hasMore) {
             //     setLimit((prevLimit) => Math.min(prevLimit + 10, MAX_PRODUCTS));
             // }
+            
             //We loaded recently We are in the cooldown window (800 ms) So → STOP, don’t load again yet
             if (!bottom || loading || !hasMore || isThrottled) return;
 
@@ -60,7 +66,7 @@ const InfiniteScroll = () => {
 
     return (
         <div>
-            <p className="font-bold">Infinite scroll</p>
+            <p className="font-bold">Infinite scroll Manual Throttle</p>
             <div className="flex flex-wrap gap-4">
                 {products.map((product) => (
                     <div key={product.id} className="flex flex-col items-center border p-4 w-98">
