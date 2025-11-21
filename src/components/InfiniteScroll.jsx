@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Card from "./Card";
 
 const InfiniteScroll = () => {
     const [products, setProducts] = useState([]);
@@ -19,7 +20,7 @@ const InfiniteScroll = () => {
             const result = await data.json();
             console.log(result);
             //setProducts(result.products);
-            setProducts((prev)=> [...prev, ...result.products]);
+            setProducts((prev) => [...prev, ...result.products]);
 
             if (result.total <= limit) {
                 setHasMore(false);
@@ -30,7 +31,7 @@ const InfiniteScroll = () => {
         }
         finally {
             setLoading(false);
-            console.timeEnd("pageFetch"); 
+            console.timeEnd("pageFetch");
         }
     }
     useEffect(() => {
@@ -46,7 +47,7 @@ const InfiniteScroll = () => {
             // if (bottom || loading || !hasMore) {
             //     setLimit((prevLimit) => Math.min(prevLimit + 10, MAX_PRODUCTS));
             // }
-            
+
             //We loaded recently We are in the cooldown window (800 ms) So → STOP, don’t load again yet
             if (!bottom || loading || !hasMore || isThrottled) return;
 
@@ -66,21 +67,18 @@ const InfiniteScroll = () => {
 
     return (
         <div>
-            <p className="font-bold">Infinite scroll Manual Throttle</p>
-            <div className="flex flex-wrap gap-4">
+            <h1 className="font-bold mb-8">Infinite scroll Manual Throttle</h1>
+
+            <div className="flex flex-wrap gap-4 justify-center">
                 {products.map((product) => (
-                    <div key={product.id} className="flex flex-col items-center border p-4 w-98">
-                        <b>{product?.title}</b>
-                        <img src={product?.thumbnail} alt={product?.title} width={100} height={100} />
-                        <p className="text-left"><b>Description: </b>{product?.description}</p>
-                    </div>
+                    <Card heading="Infinite scroll Manual Throttle" title={product?.title} img={product?.thumbnail} description={product?.description} ></Card>
                 ))}
             </div>
             {loading && (
                 (
-                    <p className="mt-4 text-center text-sm text-gray-500">
+                    <h2 className="mt-4 text-center text-sm text-gray-500 font-bold">
                         Loading more products...
-                    </p>
+                    </h2>
                 )
             )}
         </div>

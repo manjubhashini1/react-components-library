@@ -4,6 +4,7 @@ const SideNav = () => {
   const links = [
     { to: "/dashboard/button", label: "Button Component" },
     { to: "/dashboard/infinitescroll", label: "InfiniteScroll Component" },
+    { to: "/dashboard/infinitescrollio", label: "InfiniteScroll IO Component" },
   ];
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 border-r w-64">
