@@ -4,6 +4,7 @@ import Dashboard from "./pages/dashboard";
 import Button from "./components/Button";
 import InfiniteScroll from "./components/InfiniteScroll";
 import InfiniteScrollIO from "./components/InfiniteScrollIO";
+import Tab from "./components/Tab";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "infinitescrollio",
         element: <InfiniteScrollIO/>,
+      },
+      {
+        path: "tab",
+        element: <Tab/>,
       },
     ],
   },
