@@ -5,6 +5,7 @@ import Button from "./components/Button";
 import InfiniteScroll from "./components/InfiniteScroll";
 import InfiniteScrollIO from "./components/InfiniteScrollIO";
 import Tab from "./components/Tab";
+import Accordion from "./components/Accordion";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "tab",
         element: <Tab/>,
+      },
+      {
+        path: "accordion",
+        element: <Accordion/>,
       },
     ],
   },
